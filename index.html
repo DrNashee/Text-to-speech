@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text to Speech Converter</title>
+  </head>
+  <body><script> function speak(text , voice, rate,pitch,volume)
+    {
+        let speechData = new SpeechSynthesisUtterance('');
+        speechData.volume=volume;
+        speechData.rate=rate;
+        speechData.pitch=pitch;
+        speechData.text=text;
+        //speechData.lang=lang;
+        speechData.voice=voice;
+speechSynthesis.speak(speechData);
+    }</script>
+   
+    <div class="quote-container" id="result">
+    </div>
+    <button onclick="fetchdata()">Fetch quote</button>
+    <script type="text/javascript">
+        var r =1.5;
+        var p =1;
+        var v=0.5;
+        function fetchdata() {
+          fetch("https://type.fit/api/quotes")
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              // Work with JSON data here
+              var b = Math.floor((Math.random() * 1643)+1);
+              console.log(data[b].text);
+              var a= data[b].text;
+              document.getElementById("result").innerHTML=a;
+              speak(a,undefined,r,p,v);
+              //document.getElementById("result").innerHTML=a;
+            });
+        }
+      </script>
+  </body>
+</html>
